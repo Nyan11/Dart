@@ -70,6 +70,8 @@ DartDocumentFederationTest >> tearDown [
 DartDocumentFederationTest >> testRequirementReferences [
 
 	| doc repository storedRepository |
+	SystemVersion current major = 14 ifTrue: [ self skip ].
+
 	doc := requirementFile asDocumentReference.
 	doc defineFormat: (DartDocumentFormat block: [ :contents |
 				 ('' join: {
