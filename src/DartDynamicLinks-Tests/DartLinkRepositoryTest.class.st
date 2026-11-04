@@ -46,14 +46,16 @@ DartLinkRepositoryTest >> testAddLinkToBehaviourWithRequirement [
 		        addLinkToBehaviour: DartMockUpObject >> #testMethod
 		        withRequirement: self requirement.
 	self assert: link linkedRequirementReference equals: self requirement.
-	self assert: link linkedBehavior equals: DartMockUpObject >> #testMethod.
+	self
+		assert: link linkedBehavior
+		equals: DartMockUpObject >> #testMethod.
 	self assert: link results isEmpty.
-	self assert: link configuration beforeCodeExecution isConstant.
-	self assert: link configuration afterCodeExecution isConstant.
+	self assert: link configuration beforeCodeExecution value equals: nil.
+	self assert: link configuration afterCodeExecution value equals: nil.
 	self assert: link configuration beforeAssertion value.
 	self assert: link configuration afterAssertion value.
 	self assert: link configuration isTracingReceiver.
-	self deny: link configuration isTracingReturnValue.
+	self deny: link configuration isTracingReturnValue
 ]
 
 { #category : 'as yet unclassified' }
