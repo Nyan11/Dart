@@ -41,7 +41,7 @@ BaselineOfDart >> baseline: spec [
 					   'DynamicLinks' );
 				group: 'DynamicLinks'
 				with: #( 'DartDynamicLinks' 'DartDynamicLinks-MethodProxies'
-					   'DartLinks-Tests' );
+					   'DartDynamicLinks-Tests' );
 				group: 'RequirementFederation'
 				with:
 					#( 'DartRequirementFederation' 'DartRequirementFederation-Serialization'
