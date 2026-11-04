@@ -1,0 +1,18 @@
+SmalltalkCISpec {
+
+  #preLoading: '.github/ci/preLoading.st',
+
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Dart',
+      #directory : 'src',
+      #onConflict : #useLoaded,
+      #onUpgrade : #useLoaded,
+      #onWarningLog : true,
+      #platforms : [ #pharo ]
+    }
+  ],
+  #testing : {
+    #packages : [ 'Dart*' ]
+  }
+}
