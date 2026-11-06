@@ -11,22 +11,22 @@ Class {
 }
 
 { #category : 'actions' }
-DartLinkRepository >> addLinkToBehaviour: aBehaviour withRequirement: aRequirementReference [
+DartLinkRepository >> addLinkToRequirement: aRequirementReference andBehavior: aBehaviour [
 
 	^ self
-		  addLinkToBehaviour: aBehaviour
-		  withRequirement: aRequirementReference
+		  addLinkToRequirement: aRequirementReference
+		  andBehavior: aBehaviour
 		  withConfiguration: self defaultConfiguration
 ]
 
 { #category : 'actions' }
-DartLinkRepository >> addLinkToBehaviour: aBehaviour withRequirement: aRequirementReference withConfiguration: aConfiguration [
+DartLinkRepository >> addLinkToRequirement: aRequirementReference andBehavior: aBehaviour withConfiguration: aConfiguration [
 
 	| link |
 	link := DartDynamicLink new
 		        backend: self backendClass new;
-		        linkedBehavior: aBehaviour;
 		        linkedRequirementReference: aRequirementReference;
+		        linkedBehavior: aBehaviour;
 		        configuration: aConfiguration;
 		        yourself.
 	self dynamicLinks add: link.

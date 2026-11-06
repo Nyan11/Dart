@@ -39,12 +39,12 @@ DartLinkRepositoryTest >> tearDown [
 ]
 
 { #category : 'as yet unclassified' }
-DartLinkRepositoryTest >> testAddLinkToBehaviourWithRequirement [
+DartLinkRepositoryTest >> testAddLinkToRequirementAndBehavior [
 
 	| link |
 	link := self repository
-		        addLinkToBehaviour: DartMockUpObject >> #testMethod
-		        withRequirement: self requirement.
+		        addLinkToRequirement: self requirement
+		        andBehavior: DartMockUpObject >> #testMethod.
 	self assert: link linkedRequirementReference equals: self requirement.
 	self
 		assert: link linkedBehavior
@@ -59,7 +59,7 @@ DartLinkRepositoryTest >> testAddLinkToBehaviourWithRequirement [
 ]
 
 { #category : 'as yet unclassified' }
-DartLinkRepositoryTest >> testAddLinkToBehaviourWithRequirementWithConfiguration [
+DartLinkRepositoryTest >> testAddLinkToRequirementAndBehaviorWithConfiguration [
 
 	| link configuration result |
 	configuration := DartDynamicLinkConfiguration new
@@ -80,8 +80,8 @@ DartLinkRepositoryTest >> testAddLinkToBehaviourWithRequirementWithConfiguration
 		                 traceBehaviorReturnValue;
 		                 yourself.
 	link := self repository
-		        addLinkToBehaviour: DartMockUpObject >> #testMethod
-		        withRequirement: self requirement
+		        addLinkToRequirement: self requirement
+		        andBehavior: DartMockUpObject >> #testMethod
 		        withConfiguration: configuration.
 	self repository startDynamicTracing.
 	DartMockUpObject new testMethod.
@@ -110,8 +110,8 @@ DartLinkRepositoryTest >> testResults [
 	| object |
 	
 	self repository
-		addLinkToBehaviour: DartMockUpObject >> #testMethod
-		withRequirement: requirement.
+		addLinkToRequirement: requirement
+		andBehavior: DartMockUpObject >> #testMethod.
 
 	self repository startDynamicTracing.
 	
