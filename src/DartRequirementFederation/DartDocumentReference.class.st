@@ -2,33 +2,29 @@ Class {
 	#name : 'DartDocumentReference',
 	#superclass : 'Object',
 	#instVars : [
-		'requirementReferences',
 		'file',
-		'format',
-		'currentRequirementNumber',
 		'documentNumber'
 	],
 	#category : 'DartRequirementFederation',
 	#package : 'DartRequirementFederation'
 }
 
-{ #category : 'adding' }
-DartDocumentReference >> addRequirementReference: aRequirementReference [
+{ #category : 'comparing' }
+DartDocumentReference >> = arg1 [
 
-	requirementReferences := requirementReferences
-	                         , { aRequirementReference }.
-	aRequirementReference
-		document: self;
-		format: self format;
-		requirementNumber: self nextRequirementNumber
+	self == arg1 ifTrue: [ ^ true ].
+	nil.
+	self class = arg1 class ifFalse: [ ^ false ].
+	^ documentNumber = arg1 documentNumber
 ]
 
-{ #category : 'as yet unclassified' }
-DartDocumentReference >> defineFormat: aDartDocumentFormat [
+{ #category : 'requirements' }
+DartDocumentReference >> collectRequirements: aDartRequirementsCollector [
 
-	format := aDartDocumentFormat.
-	self requirementReferences:
-		(aDartDocumentFormat findRequirementsFor: self)
+	self file exists ifFalse: [ self error: 'File does not exists' ].
+	^ aDartRequirementsCollector
+		  documentReference: self;
+		  collectRequirements
 ]
 
 { #category : 'accessing' }
@@ -50,46 +46,25 @@ DartDocumentReference >> file [
 ]
 
 { #category : 'accessing' }
-DartDocumentReference >> file: anObject [
+DartDocumentReference >> file: arg1 [
 
-	file := anObject asFileReference
+	file := arg1
 ]
 
-{ #category : 'accessing' }
-DartDocumentReference >> format [
+{ #category : 'comparing' }
+DartDocumentReference >> hash [
 
-	^ format
+	^ documentNumber hash
 ]
 
-{ #category : 'accessing' }
-DartDocumentReference >> format: anObject [
+{ #category : 'testing' }
+DartDocumentReference >> isDocumentReference [
 
-	format := anObject
+	^ true
 ]
 
-{ #category : 'initialization' }
-DartDocumentReference >> initialize [
+{ #category : 'testing' }
+DartDocumentReference >> isRequirementReference [
 
-	super initialize.
-	requirementReferences := {  }.
-	currentRequirementNumber := 0
-]
-
-{ #category : 'accessing' }
-DartDocumentReference >> nextRequirementNumber [
-
-	^ currentRequirementNumber := currentRequirementNumber + 1
-]
-
-{ #category : 'accessing' }
-DartDocumentReference >> requirementReferences [
-
-	^ requirementReferences
-]
-
-{ #category : 'accessing' }
-DartDocumentReference >> requirementReferences: aCollectionOfRequirementReferences [
-
-	aCollectionOfRequirementReferences do: [ :each | each requirementNumber: self nextRequirementNumber ].
-	requirementReferences := aCollectionOfRequirementReferences
+	^ false
 ]

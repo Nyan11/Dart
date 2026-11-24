@@ -2,18 +2,29 @@ Class {
 	#name : 'DartDocumentFederation',
 	#superclass : 'Object',
 	#instVars : [
+		'requirementReferences',
 		'documentReferences',
-		'currentDocumentNumber'
+		'nextDocumentNumber'
 	],
 	#category : 'DartRequirementFederation',
 	#package : 'DartRequirementFederation'
 }
 
 { #category : 'adding' }
-DartDocumentFederation >> addDocumentReference: aDartDocumentReference [
+DartDocumentFederation >> addAllRequirementReferences: aCollection [
 
-	aDartDocumentReference  documentNumber: self nextDocumentNumber.
-	^ self documentReferences add: aDartDocumentReference
+	aCollection do: [ :each | self addRequirementReference: each ]
+]
+
+{ #category : 'adding' }
+DartDocumentFederation >> addRequirementReference: aRequirementReference [
+
+	requirementReferences add: aRequirementReference.
+	(self documentReferences includes:
+		 aRequirementReference documentReference) ifTrue: [ ^ self ].
+	aRequirementReference documentReference documentNumber:
+		self nextDocumentNumber.
+	documentReferences add: aRequirementReference documentReference
 ]
 
 { #category : 'accessing' }
@@ -26,19 +37,19 @@ DartDocumentFederation >> documentReferences [
 DartDocumentFederation >> initialize [
 
 	super initialize.
+	requirementReferences := OrderedCollection new.
 	documentReferences := OrderedCollection new.
-	currentDocumentNumber := 0
+	nextDocumentNumber := 0.
 ]
 
-{ #category : 'adding' }
+{ #category : 'initialization' }
 DartDocumentFederation >> nextDocumentNumber [
 
-	^ currentDocumentNumber := currentDocumentNumber + 1
+	^ nextDocumentNumber := nextDocumentNumber + 1
 ]
 
 { #category : 'accessing' }
 DartDocumentFederation >> requirementReferences [
 
-	^ self documentReferences flatCollect: [ :doc |
-		  doc requirementReferences ]
+	^ requirementReferences
 ]

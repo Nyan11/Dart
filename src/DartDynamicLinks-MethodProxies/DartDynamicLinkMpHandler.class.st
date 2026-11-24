@@ -2,7 +2,7 @@ Class {
 	#name : 'DartDynamicLinkMpHandler',
 	#superclass : 'MpHandler',
 	#instVars : [
-		'dynamicLink',
+		'link',
 		'pendingResults'
 	],
 	#category : 'DartDynamicLinks-MethodProxies',
@@ -17,22 +17,22 @@ DartDynamicLinkMpHandler >> afterExecutionWithReceiver: receiver arguments: args
 	result metadata at: #afterExecutionTime put: DateAndTime now.
 	result metadata
 		at: #afterExecutionAssertion
-		put: (self dynamicLink configuration afterAssertion
+		put: (self link configuration afterAssertion
 				 valueWithEnoughArguments: {
 						 result metadata.
 						 receiver.
 						 args.
 						 value }).
-	self dynamicLink configuration afterCodeExecution
+	self link configuration afterCodeExecution
 		valueWithEnoughArguments: {
 				result metadata.
 				receiver.
 				args.
 				value }.
-	self dynamicLink configuration isTracingReceiver
+	self link configuration isTracingReceiver
 		ifTrue: [ result object: receiver ]
 		ifFalse: [ result object: value ].
-	self dynamicLink addResult: result.
+	self link backend linkRepository addDynamicLinkExecutionResult: result.
 	self pendingResults removeKey: receiver.
 	^ value
 ]
@@ -42,34 +42,22 @@ DartDynamicLinkMpHandler >> beforeExecutionWithReceiver: receiver arguments: arg
 
 	| result |
 	result := DartDynamicLinkExecutionResult new
-		          dynamicLink: self dynamicLink;
+		          dynamicLink: self link;
 		          yourself.
 	self pendingResults at: receiver put: result.
 	result metadata
 		at: #beforeExecutionTime put: DateAndTime now;
 		at: #beforeExecutionAssertion
-		put: (self dynamicLink configuration beforeAssertion
+		put: (self link configuration beforeAssertion
 				 valueWithEnoughArguments: {
 						 result metadata.
 						 receiver.
 						 args }).
-	self dynamicLink configuration beforeCodeExecution
+	self link configuration beforeCodeExecution
 		valueWithEnoughArguments: {
 				result metadata.
 				receiver.
 				args }
-]
-
-{ #category : 'accessing' }
-DartDynamicLinkMpHandler >> dynamicLink [
-
-	^ dynamicLink
-]
-
-{ #category : 'accessing' }
-DartDynamicLinkMpHandler >> dynamicLink: anObject [
-
-	dynamicLink := anObject
 ]
 
 { #category : 'initialization' }
@@ -77,6 +65,18 @@ DartDynamicLinkMpHandler >> initialize [
 
 	super initialize.
 	pendingResults := IdentityDictionary new
+]
+
+{ #category : 'accessing' }
+DartDynamicLinkMpHandler >> link [
+
+	^ link
+]
+
+{ #category : 'accessing' }
+DartDynamicLinkMpHandler >> link: anObject [
+
+	link := anObject
 ]
 
 { #category : 'accessing' }

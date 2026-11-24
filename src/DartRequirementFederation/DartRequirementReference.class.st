@@ -3,8 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'contents',
-		'format',
-		'document',
+		'requirementCollector',
+		'documentReference',
 		'requirementNumber',
 		'storeMethod'
 	],
@@ -25,27 +25,15 @@ DartRequirementReference >> contents: anObject [
 ]
 
 { #category : 'accessing' }
-DartRequirementReference >> document [
+DartRequirementReference >> documentReference [
 
-	^ document
+	^ documentReference
 ]
 
 { #category : 'accessing' }
-DartRequirementReference >> document: anObject [
+DartRequirementReference >> documentReference: anObject [
 
-	document := anObject
-]
-
-{ #category : 'accessing' }
-DartRequirementReference >> format [
-
-	^ format
-]
-
-{ #category : 'accessing' }
-DartRequirementReference >> format: anObject [
-
-	format := anObject
+	documentReference := anObject
 ]
 
 { #category : 'initialization' }
@@ -56,6 +44,30 @@ DartRequirementReference >> initialize [
 	possibleStoreMethod := thisContext sender sender method.
 	(possibleStoreMethod hasPragmaNamed: #DartRequirement) ifTrue: [
 		self storeMethod: possibleStoreMethod ]
+]
+
+{ #category : 'testing' }
+DartRequirementReference >> isDocumentReference [
+
+	^ false
+]
+
+{ #category : 'testing' }
+DartRequirementReference >> isRequirementReference [
+
+	^ true
+]
+
+{ #category : 'accessing' }
+DartRequirementReference >> requirementCollector [
+
+	^ requirementCollector
+]
+
+{ #category : 'accessing' }
+DartRequirementReference >> requirementCollector: anObject [
+
+	requirementCollector := anObject
 ]
 
 { #category : 'accessing' }

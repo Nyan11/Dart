@@ -24,14 +24,16 @@ DartDynamicLinkMpBackend >> proxy [
 { #category : 'instrumentation' }
 DartDynamicLinkMpBackend >> startInstrumentation [
 
-	handler := DartDynamicLinkMpHandler new
-		           dynamicLink: self dynamicLink;
-		           yourself.
+	| tmp2 |
+	tmp2 := DartDynamicLinkMpHandler new.
+	tmp2 link: self link.
+	handler := tmp2 yourself.
 	proxy := MpMethodProxy
-		         onMethod: self dynamicLink linkedBehavior method
+		         onMethod: self link linkedBehavior method
 		         handler: handler.
-	self proxy install.
-	self proxy enableInstrumentation
+	self proxy
+		install;
+		enableInstrumentation
 ]
 
 { #category : 'instrumentation' }

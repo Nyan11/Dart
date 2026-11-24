@@ -2,22 +2,35 @@ Class {
 	#name : 'DartDynamicLinkBackend',
 	#superclass : 'Object',
 	#instVars : [
-		'dynamicLink'
+		'link',
+		'linkRepository'
 	],
 	#category : 'DartDynamicLinks',
 	#package : 'DartDynamicLinks'
 }
 
 { #category : 'accessing' }
-DartDynamicLinkBackend >> dynamicLink [
+DartDynamicLinkBackend >> link [
 
-	^ dynamicLink
+	^ link
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkBackend >> dynamicLink: anObject [
+DartDynamicLinkBackend >> link: arg1 [
 
-	dynamicLink := anObject
+	link := arg1
+]
+
+{ #category : 'accessing' }
+DartDynamicLinkBackend >> linkRepository [
+
+	^ linkRepository
+]
+
+{ #category : 'accessing' }
+DartDynamicLinkBackend >> linkRepository: anObject [
+
+	linkRepository := anObject
 ]
 
 { #category : 'actions' }

@@ -49,7 +49,6 @@ DartLinkRepositoryTest >> testAddLinkToRequirementAndBehavior [
 	self
 		assert: link linkedBehavior
 		equals: DartMockUpObject >> #testMethod.
-	self assert: link results isEmpty.
 	self assert: link configuration beforeCodeExecution value equals: nil.
 	self assert: link configuration afterCodeExecution value equals: nil.
 	self assert: link configuration beforeAssertion value.
@@ -62,7 +61,7 @@ DartLinkRepositoryTest >> testAddLinkToRequirementAndBehavior [
 DartLinkRepositoryTest >> testAddLinkToRequirementAndBehaviorWithConfiguration [
 
 	| link configuration result |
-	configuration := DartDynamicLinkConfiguration new
+	configuration := DartLinkConfiguration new
 		                 beforeCodeExecution: [ :metadata :receiver :arguments |
 			                 metadata at: #a put: true ];
 		                 afterCodeExecution: [
@@ -85,8 +84,8 @@ DartLinkRepositoryTest >> testAddLinkToRequirementAndBehaviorWithConfiguration [
 		        withConfiguration: configuration.
 	self repository startDynamicTracing.
 	DartMockUpObject new testMethod.
-	self assert: link results size equals: 1.
-	result := link results first.
+	self assert: self repository dynamicLinkExecutionResults size equals: 1.
+	result := self repository dynamicLinkExecutionResults first.
 	self assert: result object equals: 42.
 	self assert: (result metadata at: #a).
 	self assert: (result metadata at: #b).
@@ -115,14 +114,14 @@ DartLinkRepositoryTest >> testResults [
 
 	self repository startDynamicTracing.
 	
-	self assert: self repository results isEmpty.
+	self assert: self repository dynamicLinkExecutionResults isEmpty.
 	object := DartMockUpObject new.
 	object testMethod.
-	self assert: self repository results size equals: 1.
-	self assert: self repository results first object equals: object.
+	self assert: self repository dynamicLinkExecutionResults size equals: 1.
+	self assert: self repository dynamicLinkExecutionResults first object equals: object.
 	self
-		assert: self repository results first requirementReference
+		assert: self repository dynamicLinkExecutionResults first requirementReference
 		equals: self requirement.
 	object testMethod; testMethod; testMethod; testMethod.
-	self assert: self repository results size equals: 5
+	self assert: self repository dynamicLinkExecutionResults size equals: 5
 ]

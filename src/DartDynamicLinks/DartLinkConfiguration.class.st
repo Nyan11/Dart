@@ -1,5 +1,5 @@
 Class {
-	#name : 'DartDynamicLinkConfiguration',
+	#name : 'DartLinkConfiguration',
 	#superclass : 'Object',
 	#instVars : [
 		'beforeCodeExecution',
@@ -13,55 +13,55 @@ Class {
 }
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> afterAssertion [
+DartLinkConfiguration >> afterAssertion [
 
 	^ afterAssertion
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> afterAssertion: anObject [
+DartLinkConfiguration >> afterAssertion: anObject [
 
 	afterAssertion := anObject
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> afterCodeExecution [
+DartLinkConfiguration >> afterCodeExecution [
 
 	^ afterCodeExecution
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> afterCodeExecution: anObject [
+DartLinkConfiguration >> afterCodeExecution: anObject [
 
 	afterCodeExecution := anObject
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> beforeAssertion [
+DartLinkConfiguration >> beforeAssertion [
 
 	^ beforeAssertion
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> beforeAssertion: anObject [
+DartLinkConfiguration >> beforeAssertion: anObject [
 
 	beforeAssertion := anObject
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> beforeCodeExecution [
+DartLinkConfiguration >> beforeCodeExecution [
 
 	^ beforeCodeExecution
 ]
 
 { #category : 'accessing' }
-DartDynamicLinkConfiguration >> beforeCodeExecution: anObject [
+DartLinkConfiguration >> beforeCodeExecution: anObject [
 
 	beforeCodeExecution := anObject
 ]
 
 { #category : 'initialization' }
-DartDynamicLinkConfiguration >> initialize [
+DartLinkConfiguration >> initialize [
 
 	super initialize.
 	beforeAssertion := [ true ].
@@ -72,25 +72,25 @@ DartDynamicLinkConfiguration >> initialize [
 ]
 
 { #category : 'as yet unclassified' }
-DartDynamicLinkConfiguration >> isTracingReceiver [
+DartLinkConfiguration >> isTracingReceiver [
 
 	^ tracingReceiver
 ]
 
 { #category : 'as yet unclassified' }
-DartDynamicLinkConfiguration >> isTracingReturnValue [
+DartLinkConfiguration >> isTracingReturnValue [
 
 	^ tracingReceiver not
 ]
 
 { #category : 'as yet unclassified' }
-DartDynamicLinkConfiguration >> traceBehaviorReceiver [
+DartLinkConfiguration >> traceBehaviorReceiver [
 
 	tracingReceiver := true
 ]
 
 { #category : 'as yet unclassified' }
-DartDynamicLinkConfiguration >> traceBehaviorReturnValue [
+DartLinkConfiguration >> traceBehaviorReturnValue [
 
 	tracingReceiver := false
 ]

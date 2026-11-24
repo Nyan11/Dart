@@ -25,6 +25,12 @@ DartDocumentFederationTest >> newDummyClass [
 				  package: 'DummyPackage' ]
 ]
 
+{ #category : 'running' }
+DartDocumentFederationTest >> requirementFile [
+
+	^ requirementFile
+]
+
 { #category : 'instance creation' }
 DartDocumentFederationTest >> requirementFileContents [
 
@@ -69,20 +75,25 @@ DartDocumentFederationTest >> tearDown [
 { #category : 'tests' }
 DartDocumentFederationTest >> testRequirementReferences [
 
-	| doc repository storedRepository |
+	| doc requirements federation storedRepository |
 	SystemVersion current major = 14 ifTrue: [ self skip ].
 
-	doc := requirementFile asDocumentReference.
-	doc defineFormat: (DartDocumentFormat block: [ :contents |
-				 ('' join: {
-						  Character cr.
-						  Character cr }) split: contents ]).
-	repository := DartDocumentFederation new
-		              addDocumentReference: doc;
+	doc := DartDocumentReference new
+		       file: self requirementFile;
+		       yourself.
+	requirements := doc collectRequirements:
+		                (DartSplitDocumentCollector new splitOn: '<r><r>').
+	self assert: requirements size equals: 3.
+
+	federation := DartDocumentFederation new
+		              addAllRequirementReferences: requirements;
 		              yourself.
-	repository storeIn: self dummyclass.
+	self assert: federation requirementReferences size equals: 3.
+	self assert: federation documentReferences size equals: 1.
+
+	federation storeIn: self dummyclass.
 	storedRepository := self dummyclass federation.
 
-	self assert: repository requirementReferences size equals: 3.
-	self assert: storedRepository requirementReferences size equals: 3
+	self assert: storedRepository requirementReferences size equals: 3.
+	self assert: federation documentReferences size equals: 1
 ]
